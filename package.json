@@ -4,7 +4,7 @@
   "description": "RIA1_TDD_TRAINING est un projet permettant d'entraîner le TDD en JavaScript et tout en se familiarisant avec une approche OOP.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -16,9 +16,6 @@
     "url": "https://github.com/NicolasGlassey/RIA1_TDD_TRAINING/issues"
   },
   "homepage": "https://github.com/NicolasGlassey/RIA1_TDD_TRAINING#readme",
-  "scripts": {
-    "test": "jest"
-  },
   "devDependencies": {
     "jest": "^27.5.1"
   },
