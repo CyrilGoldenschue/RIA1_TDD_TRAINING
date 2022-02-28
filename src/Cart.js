@@ -8,10 +8,11 @@
 
 "use strict";
 
-module.exports = class Cart{
+module.exports = class Cart {
 
     //region private attributes
     items = null;
+
     //endregion private attributes
 
 
@@ -19,15 +20,15 @@ module.exports = class Cart{
      * @brief This method constructs a Cart Object
      * @param items : list of cartItems
      */
-    constructor(items = null){
-        throw new Error('Method not implemented.');
+    constructor(items = null) {
+        this.items = items;
     }
 
     /**
      * @brief This property returns the list of CartItems presents in the Cart.
      * @exception EmptyCartException is thrown if the Cart is empty
      */
-    get items(){
+    get items() {
         throw new Error('Method not implemented.');
     }
 
@@ -35,9 +36,19 @@ module.exports = class Cart{
      * @brief This property returns the total of the Cart.
      * @exception EmptyCartException is thrown if the Cart is empty
      */
-    get totalPrice(){
-        throw new Error('Method not implemented.');
+    get totalPrice() {
+        let total = null;
+        if (this.items == null) {
+            return 0
+        } else {
+            this.items.forEach((item) => {
+                total += item.total;
+            })
+            return total;
+        }
+
     }
+
     //endregion public methods
 
     //region private methods
