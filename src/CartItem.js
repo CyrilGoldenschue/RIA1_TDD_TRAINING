@@ -35,51 +35,33 @@ module.exports = class CartItem {
      * @brief This property gets the article id
      */
     get articleId() {
-        return this.articleId;
+        return this.#articleId;
     }
 
     /**
      * @brief This property gets the quantity
      */
     get quantity() {
-        return this.quantity;
+        return this.#quantity;
     }
 
     /**
      * @brief This property gets the price
      */
     get price() {
-        return this.price;
+        return this.#price;
     }
 
     /**
      * @brief This property gets the total
      */
     get total() {
-        return this.quantity * this.price;
+        return this.#quantity * this.#price;
     }
     //endregion public methods
 
     //region private methods
     //endregion private methods
-}
-
-class Error {
-    constructor(message) {
-        this.message = message;
-    }
-}
-
-class CartItemException extends Error{
-}
-
-module.exports = class InvalidArticleIdException extends CartItemException{
-}
-
-module.exports = class InvalidQuantityException extends CartItemException{
-}
-
-module.exports = class InvalidPriceException extends CartItemException{
 }
 
 
