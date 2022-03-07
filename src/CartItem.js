@@ -28,24 +28,17 @@ module.exports = class CartItem {
      * @exception InvalidPriceException is thrown when the price is smaller than 10.
      */
     constructor(articleId, quantity, price) {
-        if(articleId < 1){
+        if (articleId < 1) {
             throw new Error("InvalidArticleIdException");
-        }else{
-            this.#articleId = articleId;
         }
-        if(quantity < 1){
-            throw new Error("InvalidQuantityException");
-        }else{
-            this.#quantity = quantity;
-        }
-        if(price < 10){
-            throw new Error("InvalidPriceException");
-        }else{
-            this.#price = price;
-        }
+
+        this.#articleId = articleId;
+        this.quantity = quantity;
+        this.price = price;
 
 
     }
+
     /**
      * @brief This property gets the article id
      */
@@ -57,19 +50,19 @@ module.exports = class CartItem {
      * @brief This property gets the quantity
      */
     get quantity() {
-        if(this.#quantity < 0){
-            throw new InvalidQuantityException("InvalidQuantityException");
-        }else {
-            return this.#quantity;
+        if (this.#quantity < 1) {
+            throw new Error("InvalidQuantityException");
         }
+        return this.#quantity;
+
     }
 
-    set quantity(value){
-        if(value < 0){
-            throw new InvalidQuantityException("InvalidQuantityException");
-        }else {
-            this.#quantity = value;
+    set quantity(value) {
+        if (value < 1) {
+            throw new Error("InvalidQuantityException");
         }
+
+        this.#quantity = value;
     }
 
     /**
@@ -79,12 +72,12 @@ module.exports = class CartItem {
         return this.#price;
     }
 
-    set price(value){
-        if(value < 10){
+    set price(value) {
+        if (value < 10) {
             throw new Error("InvalidPriceException");
-        }else{
-            this.#price = value;
         }
+
+        this.#price = value;
     }
 
     /**
@@ -93,6 +86,7 @@ module.exports = class CartItem {
     get total() {
         return this.#quantity * this.#price;
     }
+
     //endregion public methods
 
     //region private methods
