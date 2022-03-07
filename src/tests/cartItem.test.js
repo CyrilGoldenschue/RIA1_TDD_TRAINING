@@ -8,10 +8,7 @@
 "use strict";
 
 let CartItem =  require('../CartItem.js');
-
-const InvalidArticleIdException = require("../CartItem.js");
-const InvalidQuantityException = require("../CartItem.js");
-const InvalidPriceException = require("../CartItem.js");
+const Error = require("../Error.js");
 
 test('allGetters_NominalCase_Success', () => {
     //given
@@ -38,7 +35,7 @@ test('constructor_InvalidArticleId_ThrowException', () => {
     let price = 20;
 
     //when
-    expect(() => new CartItem(articleId, quantity, price)).toThrow(InvalidArticleIdException);
+    expect(() => new CartItem(articleId, quantity, price)).toThrow(Error.InvalidArticleIdException);
 
     //then
     //Exception is thrown
@@ -51,7 +48,7 @@ test('constructor_InvalidQuantity_ThrowException', () => {
     let price = 20;
 
     //when
-    expect(() => new CartItem(articleId, quantity, price)).toThrow(InvalidQuantityException);
+    expect(() => new CartItem(articleId, quantity, price)).toThrow(Error.InvalidQuantityException);
 
     //then
     //Exception is thrown
@@ -64,7 +61,7 @@ test('constructor_InvalidPrice_ThrowException', () => {
     let price = 9;//Invalid price (smaller than 10)
 
     //when
-    expect(() => new CartItem(articleId, quantity, price)).toThrow(InvalidPriceException);
+    expect(() => new CartItem(articleId, quantity, price)).toThrow(Error.InvalidPriceException);
 
     //then
     //Exception is thrown
@@ -80,10 +77,10 @@ test('Quantity_SetQuantityNominalCase_Success', () => {
     let expectedTotal = 300;
 
     //when
-    cartItem.Quantity = expectedQuantity;
+    cartItem.quantity = expectedQuantity;
 
     //then
-    expect(expectedQuantity).toEqual(cartItem.price);
+    expect(expectedQuantity).toEqual(cartItem.quantity);
     expect(expectedTotal).toEqual(cartItem.total);
 })
 
@@ -96,7 +93,7 @@ test('Quantity_SetQuantityInvalidValue_ThrowException', () => {
     let invalidQuantityToSet = -1;//Invalid quantity (smaller than 1)
 
     //when
-    expect(() => cartItem.Quantity = invalidQuantityToSet).toThrow(InvalidQuantityException);
+    expect(() => cartItem.quantity = invalidQuantityToSet).toThrow(Error.InvalidQuantityException);
 
     //then
     //Exception is thrown
@@ -112,11 +109,11 @@ test('Price_SetPriceNominalCase_Success', () => {
     let expectedTotal = 220;
 
     //when
-    cartItem.Price = expectedPrice;
+    cartItem.price = expectedPrice;
 
     //then
-    expect(expectedPrice).toEqual(cartItem.Price);
-    expect(expectedTotal).toEqual(cartItem.Total);
+    expect(expectedPrice).toEqual(cartItem.price);
+    expect(expectedTotal).toEqual(cartItem.total);
 })
 
 test('Price_SetPriceInvalidPrice_ThrowException', () => {

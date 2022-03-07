@@ -7,6 +7,7 @@
  */
 
 "use strict";
+const Error = require("./Error.js");
 
 module.exports = class CartItem {
 
@@ -42,7 +43,19 @@ module.exports = class CartItem {
      * @brief This property gets the quantity
      */
     get quantity() {
-        return this.#quantity;
+        if(this.#quantity < 0){
+            throw new Error.InvalidQuantityException("InvalidQuantityException");
+        }else {
+            return this.#quantity;
+        }
+    }
+
+    set quantity(value){
+        if(value < 0){
+            throw new Error.InvalidQuantityException("InvalidQuantityException");
+        }else {
+            this.#quantity = value;
+        }
     }
 
     /**
@@ -50,6 +63,10 @@ module.exports = class CartItem {
      */
     get price() {
         return this.#price;
+    }
+
+    set price(value){
+        this.#price = value;
     }
 
     /**
@@ -63,5 +80,4 @@ module.exports = class CartItem {
     //region private methods
     //endregion private methods
 }
-
 
