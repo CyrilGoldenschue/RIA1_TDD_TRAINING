@@ -125,7 +125,7 @@ test('Price_SetPriceInvalidPrice_ThrowException', () => {
     let invalidPriceToSet = 9;//Invalid quantity (smaller than 10)
 
     //when
-    expect(() => cartItem.Quantity = invalidPriceToSet).toThrow(InvalidPriceException);
+    expect(() => cartItem.price = invalidPriceToSet).toThrow(Error.InvalidPriceException);
 
     //then
     //Exception is thrown

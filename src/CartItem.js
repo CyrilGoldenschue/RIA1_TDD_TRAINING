@@ -28,9 +28,23 @@ module.exports = class CartItem {
      * @exception InvalidPriceException is thrown when the price is smaller than 10.
      */
     constructor(articleId, quantity, price) {
-        this.#articleId = articleId;
-        this.#quantity = quantity;
-        this.#price = price;
+        if(articleId < 1){
+            throw new Error("InvalidArticleIdException");
+        }else{
+            this.#articleId = articleId;
+        }
+        if(quantity < 1){
+            throw new Error("InvalidQuantityException");
+        }else{
+            this.#quantity = quantity;
+        }
+        if(price < 10){
+            throw new Error("InvalidPriceException");
+        }else{
+            this.#price = price;
+        }
+
+
     }
     /**
      * @brief This property gets the article id
@@ -44,7 +58,7 @@ module.exports = class CartItem {
      */
     get quantity() {
         if(this.#quantity < 0){
-            throw new Error.InvalidQuantityException("InvalidQuantityException");
+            throw new InvalidQuantityException("InvalidQuantityException");
         }else {
             return this.#quantity;
         }
@@ -52,7 +66,7 @@ module.exports = class CartItem {
 
     set quantity(value){
         if(value < 0){
-            throw new Error.InvalidQuantityException("InvalidQuantityException");
+            throw new InvalidQuantityException("InvalidQuantityException");
         }else {
             this.#quantity = value;
         }
@@ -66,7 +80,11 @@ module.exports = class CartItem {
     }
 
     set price(value){
-        this.#price = value;
+        if(value < 10){
+            throw new Error("InvalidPriceException");
+        }else{
+            this.#price = value;
+        }
     }
 
     /**
