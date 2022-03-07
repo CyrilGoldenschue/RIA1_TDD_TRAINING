@@ -1,3 +1,5 @@
+const EmptyCartException = require("./CartItem.js");
+
 class Error {
     #message;
     constructor(message) {
@@ -19,3 +21,9 @@ module.exports = class InvalidQuantityException extends CartItemException{}
 module.exports = class InvalidPriceException extends CartItemException{}
 
 module.exports = class InvalidArticleIdException extends CartItemException{}
+
+
+class CartException extends Error{
+}
+
+module.exports = class EmptyCartException extends CartException{}

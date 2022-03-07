@@ -8,10 +8,11 @@
 
 "use strict";
 
+const Error = require("./Error.js");
 module.exports = class Cart {
 
     //region private attributes
-    items = null;
+    #items = null;
 
     //endregion private attributes
 
@@ -21,7 +22,7 @@ module.exports = class Cart {
      * @param items : list of cartItems
      */
     constructor(items = null) {
-        this.items = items;
+        this.#items = items;
     }
 
     /**
@@ -38,10 +39,10 @@ module.exports = class Cart {
      */
     get totalPrice() {
         let total = null;
-        if (this.items == null) {
-            return 0
+        if (this.#items == null) {
+            throw new Error("EmptyCartException");
         } else {
-            this.items.forEach((item) => {
+            this.#items.forEach((item) => {
                 total += item.total;
             })
             return total;
