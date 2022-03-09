@@ -3,12 +3,12 @@
  * @brief     This class is designed to test the behaviour of a cartItem.
  * @author    Created by Nicolas.GLASSEY
  * @version   13-02-2022 - original (dedicated to RIA1)
- * @version   08-03-2022 - update
+ *            08-03-2022 - update (Update Cart)
  */
 
 "use strict";
 
-let CartItem =  require('../CartItem/CartItem.js');
+const CartItem =  require('../CartItem/CartItem.js');
 const InvalidArticleIdException = require("../CartItem/InvalidArticleIdException.js");
 const InvalidQuantityException = require("../CartItem/InvalidQuantityException.js");
 const InvalidPriceException = require("../CartItem/InvalidPriceException.js");

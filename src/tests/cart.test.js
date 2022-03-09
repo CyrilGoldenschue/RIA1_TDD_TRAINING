@@ -3,10 +3,10 @@
  * @brief     This class is designed to test the behaviour of a cart.
  * @author    Created by Nicolas.GLASSEY
  * @version   13-02-2022 - original (dedicated to RIA1)
- * @version   08-03-2022 - update
+ *            08-03-2022 - update (Update Cart)
  */
 
-let Cart = require('../Cart/Cart.js');
+const Cart = require('../Cart/Cart.js');
 const CartItem = require("../CartItem/CartItem.js");
 const EmptyCartException = require("../Cart/EmptyCartException.js");
 const UpdateCartException = require("../Cart/UpdateCartException.js");
@@ -122,21 +122,100 @@ test('count_EmptyCart_ThrowException', () => {
     //Exception is thrown
 })
 
-test('updateCart_EmptyCartAddFirstSingleCartItem_Success', () => {
+//region updateCart
+test('updateCart_AddSingleCartItemInEmptyCart_Success', () => {
     //given
+    //prepare initial cart
     let cart = new Cart(null);
+
+    //prepare cart update
+    let itemToAdd = new CartItem(1,"Iphone 27",1,expectedTotalPrice);
+    let expectedItems = [itemToAdd];
     let expectedTotalPrice = 10;
-    let cartItem1 = new CartItem(1,"Iphone 27",1,expectedTotalPrice);
-    let items = [cartItem1];
 
     //when
-    cart.updateCart(items);
+    cart.updateCart(expectedItems);
 
     //then
+    let actualItems = cart.items;
+    for (let i = 0 ; i <= expectedItems.length ; i++)
+    {
+        expect(expectedItems[i]).toEqual(actualItems[i]);
+    }
     expect(expectedTotalPrice).toEqual(cart.totalPrice);
 })
 
-test('updateCart_EmptyCartEmptyItemsToAdd_ThrowException', () => {
+test('updateCart_AddDifferentCartItemInNotEmptyCart_Success', () => {
+    //given
+    //prepare initial cart
+    let item1 = new CartItem(1,"Iphone 27",2,10);
+    let cart = new Cart([item1]);
+
+    //prepare cart update
+    let itemToAdd = new CartItem(2, "Iphone 28"  ,1,40);
+    let expectedItems = [item1, itemToAdd];
+    let expectedTotalPrice = 60;
+
+    //when
+    cart.updateCart(expectedItems);
+
+    //then
+    let actualItems = cart.items;
+    for (let i = 0 ; i <= expectedItems.length ; i++)
+    {
+        expect(expectedItems[i]).toEqual(actualItems[i]);
+    }
+    expect(expectedTotalPrice).toEqual(cart.totalPrice);
+})
+
+test('updateCart_UpdateExistingCartItemQuantity_Success', () => {
+    //given
+    //prepare initial cart
+    let item1 = new CartItem(1,"Iphone 27",2,10);
+    let cart = new Cart([item1]);
+
+    //prepare cart update
+    let itemToUpdate = new CartItem(1, "Iphone 27"  ,1,10);
+    let expectedItems = [itemToUpdate];
+    let expectedTotalPrice = 10;
+
+    //when
+    cart.updateCart(expectedItems);
+
+    //then
+    let actualItems = cart.items;
+    for (let i = 0 ; i <= expectedItems.length ; i++)
+    {
+        expect(expectedItems[i]).toEqual(actualItems[i]);
+    }
+    expect(expectedTotalPrice).toEqual(cart.totalPrice);
+})
+
+test('updateCart_RemoveOneOfCartItem_Success', () => {
+    //given
+    //prepare initial cart
+    let item1 = new CartItem(1,"Iphone 27",2,10);
+    let item2 = new CartItem(1,"Iphone 28",1,30);
+    let cart = new Cart([item1, item2]);
+
+    //prepare cart update
+    let itemToUpdate = new CartItem(1, "Iphone 27"  ,0,10);
+    let expectedItems = ([item2]);
+    let expectedTotalPrice = 30;
+
+    //when
+    cart.updateCart(expectedItems);
+
+    //then
+    let actualItems = cart.items;
+    for (let i = 0 ; i <= expectedItems.length ; i++)
+    {
+        expect(expectedItems[i]).toEqual(actualItems[i]);
+    }
+    expect(expectedTotalPrice).toEqual(cart.totalPrice);
+})
+
+test('updateCart_AddEmptyItemsInEmptyCart_ThrowException', () => {
     //given
     let cart = new Cart(null);
     let items = null;
@@ -147,3 +226,77 @@ test('updateCart_EmptyCartEmptyItemsToAdd_ThrowException', () => {
     //then
     //Exception is thrown
 })
+
+test('updateCart_AddEmptyItemsInNotEmptyCart_ThrowException', () => {
+    //given
+    let item1 = new CartItem(1,"Iphone 27",2,10);
+    let cart = new Cart([item1]);
+    let items = null;
+
+    //when
+    expect(() => cart.updateCart(items)).toThrow(UpdateCartException);
+
+    //then
+    //Exception is thrown
+})
+//endregion UpdateCart
+
+//region RemoveCarItem
+test('RemoveCartItem_CartWithOneSpecificItem_Success', () => {
+    //given
+    let cartItemToRemove = new CartItem(1,1,10);
+    let cartItemToKeep= new CartItem(2,2,20);
+    let items = [cartItemToRemove, cartItemToKeep];
+    let cart = new Cart(items);
+
+    //when
+    cart.removeCartItem([cartItemToRemove]);
+    //then
+    expect(cart.items).toEqual([cartItemToKeep]);
+    expect(cart.totalPrice).toEqual(cartItemToKeep.total);
+    //Exception is thrown
+})
+
+test('RemoveCartItem_CartWithOneSpecificItem_ThrowException', () => {
+    //given
+    let cartItemToRemove = new CartItem(1,1,10);
+    let cartItemToKeep= new CartItem(2,2,20);
+    let items = [cartItemToRemove, cartItemToKeep];
+    let cart = new Cart(items);
+    cart.removeCartItem([cartItemToRemove]);
+
+    //when
+    expect(() => cart.removeCartItem([cartItemToRemove])).toThrow(CartItemNotFoundException);
+
+    //then
+    //Exception is thrown
+})
+//endregion RemoveCartItem
+
+//region EmptyCart
+test('emptyCart_CartWithItems_Success', () => {
+    //given
+    let item1 = new CartItem(1,"Iphone 27",2,10);
+    let cart = new Cart([item1]);
+    const expectedItemsAmount = 0;
+
+    //when
+    cart.emptyCart();
+
+    //then
+    //TODO - review this assert
+    expect(() => cart.totalPrice).toThrow(EmptyCartException);
+});
+
+test('emptyCart_CartWithoutItems_ThrowException', () => {
+    //given
+    let cart = new Cart();
+    cart = new Cart();
+
+    //when
+    expect(() => cart.emptyCart()).toThrow(EmptyCartException);
+
+    //then
+    //Exception thrown
+});
+//endregion EmptyCart
