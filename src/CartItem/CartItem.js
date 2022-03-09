@@ -53,7 +53,7 @@ module.exports = class CartItem {
      * @brief This property gets the quantity
      */
     get quantity() {
-        if (this.#quantity < 1) {
+        if (this.#quantity < 0) {
             throw new InvalidQuantityException();
         }
         return this.#quantity;
@@ -61,7 +61,7 @@ module.exports = class CartItem {
     }
 
     set quantity(value) {
-        if (value < 1) {
+        if (value < 0) {
             throw new InvalidQuantityException();
         }
 
@@ -83,12 +83,18 @@ module.exports = class CartItem {
         this.#price = value;
     }
 
+    get name(){
+        return this.#name;
+    }
+
     /**
      * @brief This property gets the total
      */
     get total() {
         return this.#quantity * this.#price;
     }
+
+
 
     //endregion public methods
 

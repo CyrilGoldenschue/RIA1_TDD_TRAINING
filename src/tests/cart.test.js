@@ -10,6 +10,7 @@ const Cart = require('../Cart/Cart.js');
 const CartItem = require("../CartItem/CartItem.js");
 const EmptyCartException = require("../Cart/EmptyCartException.js");
 const UpdateCartException = require("../Cart/UpdateCartException.js");
+const CartItemNotFoundException = require("../Cart/CartItemNotFoundException.js")
 
 test('items_NominalCase_Success', () => {
     //given
@@ -129,9 +130,10 @@ test('updateCart_AddSingleCartItemInEmptyCart_Success', () => {
     let cart = new Cart(null);
 
     //prepare cart update
+    let expectedTotalPrice = 10;
     let itemToAdd = new CartItem(1,"Iphone 27",1,expectedTotalPrice);
     let expectedItems = [itemToAdd];
-    let expectedTotalPrice = 10;
+
 
     //when
     cart.updateCart(expectedItems);
@@ -195,7 +197,7 @@ test('updateCart_RemoveOneOfCartItem_Success', () => {
     //given
     //prepare initial cart
     let item1 = new CartItem(1,"Iphone 27",2,10);
-    let item2 = new CartItem(1,"Iphone 28",1,30);
+    let item2 = new CartItem(2,"Iphone 28",1,30);
     let cart = new Cart([item1, item2]);
 
     //prepare cart update
@@ -261,7 +263,7 @@ test('RemoveCartItem_CartWithOneSpecificItem_ThrowException', () => {
     //given
     let cartItemToRemove = new CartItem(1,1,10);
     let cartItemToKeep= new CartItem(2,2,20);
-    let items = [cartItemToRemove, cartItemToKeep];
+    let items = [cartItemToKeep, cartItemToRemove];
     let cart = new Cart(items);
     cart.removeCartItem([cartItemToRemove]);
 
