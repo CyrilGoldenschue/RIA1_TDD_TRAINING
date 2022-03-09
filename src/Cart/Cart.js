@@ -24,6 +24,7 @@ module.exports = class Cart {
      */
     constructor(items = null) {
         this.#items = items;
+        //this.updateCart(items);
     }
 
     /**
@@ -54,6 +55,13 @@ module.exports = class Cart {
         }
         throw new EmptyCartException();
 
+    }
+
+    updateCart(items){
+        if(items == null) {
+            throw new UpdateCartException();
+        }
+        this.#items = items;
     }
 
     /**
