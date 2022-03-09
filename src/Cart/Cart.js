@@ -10,6 +10,7 @@
 
 const EmptyCartException = require("./EmptyCartException.js");
 const UpdateCartException = require("./UpdateCartException.js");
+const CartItemNotFoundException = require("./CartItemNotFoundException.js")
 module.exports = class Cart {
 
     //region private attributes
@@ -32,20 +33,20 @@ module.exports = class Cart {
      * @exception EmptyCartException is thrown if the Cart is empty
      */
     get items() {
-        if(this.#items != null){
+        if (this.#items != null) {
             return this.#items;
         }
         throw new EmptyCartException();
     }
 
-    count(distinct = false){
-        if(this.#items != null){
+    count(distinct = false) {
+        if (this.#items != null) {
             let number = 0;
-            if(distinct) {
+            if (distinct) {
                 this.#items.forEach((item) => {
                     number++;
                 })
-            }else{
+            } else {
                 this.#items.forEach((item) => {
                     number += item.quantity;
                 })
@@ -57,11 +58,31 @@ module.exports = class Cart {
 
     }
 
-    updateCart(items){
-        if(items == null) {
+    updateCart(items) {
+        if (items == null) {
             throw new UpdateCartException();
         }
         this.#items = items;
+    }
+
+    removeCartItem(itemsToRemove) {
+        itemsToRemove.forEach((itemToRemove) => {
+            let index = this.#items.indexOf(itemToRemove)
+            if(index == -1){
+                throw new CartItemNotFoundException();
+            }
+            this.#items = this.#items.slice(index, 1);
+        })
+
+
+    }
+
+    emptyCart(){
+        if(this.#items == null) {
+            throw new EmptyCartException();
+        }
+        this.#items = null;
+
     }
 
     /**

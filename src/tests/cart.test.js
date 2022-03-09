@@ -10,6 +10,7 @@ const Cart = require('../Cart/Cart.js');
 const CartItem = require("../CartItem/CartItem.js");
 const EmptyCartException = require("../Cart/EmptyCartException.js");
 const UpdateCartException = require("../Cart/UpdateCartException.js");
+const CartItemNotFoundException = require("../Cart/CartItemNotFoundException.js")
 
 test('items_NominalCase_Success', () => {
     //given
@@ -262,7 +263,7 @@ test('RemoveCartItem_CartWithOneSpecificItem_ThrowException', () => {
     //given
     let cartItemToRemove = new CartItem(1,1,10);
     let cartItemToKeep= new CartItem(2,2,20);
-    let items = [cartItemToRemove, cartItemToKeep];
+    let items = [cartItemToKeep, cartItemToRemove];
     let cart = new Cart(items);
     cart.removeCartItem([cartItemToRemove]);
 
