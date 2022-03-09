@@ -8,7 +8,8 @@
 
 "use strict";
 
-const Error = require("../Error.js");
+const EmptyCartException = require("./EmptyCartException.js");
+const UpdateCartException = require("./UpdateCartException.js");
 module.exports = class Cart {
 
     //region private attributes
@@ -30,7 +31,19 @@ module.exports = class Cart {
      * @exception EmptyCartException is thrown if the Cart is empty
      */
     get items() {
-        throw new Error('Method not implemented.');
+        if(this.#items != null){
+            return this.#items;
+        }
+        throw new EmptyCartException();
+    }
+
+    count(){
+        let number = 0;
+        this.#items.forEach((item) => {
+            number += item.quantity;
+        })
+
+        return number
     }
 
     /**
@@ -40,7 +53,7 @@ module.exports = class Cart {
     get totalPrice() {
         let total = null;
         if (this.#items == null) {
-            throw new Error("EmptyCartException");
+            throw new EmptyCartException();
         } else {
             this.#items.forEach((item) => {
                 total += item.total;
