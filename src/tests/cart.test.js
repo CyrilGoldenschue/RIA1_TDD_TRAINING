@@ -129,9 +129,10 @@ test('updateCart_AddSingleCartItemInEmptyCart_Success', () => {
     let cart = new Cart(null);
 
     //prepare cart update
+    let expectedTotalPrice = 10;
     let itemToAdd = new CartItem(1,"Iphone 27",1,expectedTotalPrice);
     let expectedItems = [itemToAdd];
-    let expectedTotalPrice = 10;
+
 
     //when
     cart.updateCart(expectedItems);
@@ -195,7 +196,7 @@ test('updateCart_RemoveOneOfCartItem_Success', () => {
     //given
     //prepare initial cart
     let item1 = new CartItem(1,"Iphone 27",2,10);
-    let item2 = new CartItem(1,"Iphone 28",1,30);
+    let item2 = new CartItem(2,"Iphone 28",1,30);
     let cart = new Cart([item1, item2]);
 
     //prepare cart update

@@ -37,13 +37,23 @@ module.exports = class Cart {
         throw new EmptyCartException();
     }
 
-    count(){
-        let number = 0;
-        this.#items.forEach((item) => {
-            number += item.quantity;
-        })
+    count(distinct = false){
+        if(this.#items != null){
+            let number = 0;
+            if(distinct) {
+                this.#items.forEach((item) => {
+                    number++;
+                })
+            }else{
+                this.#items.forEach((item) => {
+                    number += item.quantity;
+                })
+            }
 
-        return number
+            return number
+        }
+        throw new EmptyCartException();
+
     }
 
     /**
