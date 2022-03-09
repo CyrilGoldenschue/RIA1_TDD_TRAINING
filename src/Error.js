@@ -1,4 +1,4 @@
-const EmptyCartException = require("./CartItem.js");
+const EmptyCartException = require("./CartItem/CartItem.js");
 
 class Error {
     #message;

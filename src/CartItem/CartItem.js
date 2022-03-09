@@ -7,7 +7,7 @@
  */
 
 "use strict";
-const Error = require("./Error.js");
+const Error = require("../Error.js");
 
 module.exports = class CartItem {
 
