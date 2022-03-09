@@ -7,7 +7,9 @@
  */
 
 "use strict";
-const Error = require("../Error.js");
+const InvalidArticleIdException = require("./InvalidArticleIdException.js");
+const InvalidQuantityException = require("./InvalidQuantityException.js");
+const InvalidPriceException = require("./InvalidPriceException.js");
 
 module.exports = class CartItem {
 
@@ -15,6 +17,7 @@ module.exports = class CartItem {
     #articleId;
     #quantity;
     #price;
+    #name;
     //endregion private attributes
 
     //region public methods
@@ -23,20 +26,20 @@ module.exports = class CartItem {
      * @param articleId
      * @param quantity
      * @param price (in CHF)
+     * @param name
      * @exception InvalidArticleIdException is thrown when the article is smaller than 1.
      * @exception InvalidQuantityException is thrown when the quantity is smaller than 1.
      * @exception InvalidPriceException is thrown when the price is smaller than 10.
      */
-    constructor(articleId, quantity, price) {
+    constructor(articleId, name, quantity, price) {
         if (articleId < 1) {
-            throw new Error("InvalidArticleIdException");
+            throw new InvalidArticleIdException();
         }
 
         this.#articleId = articleId;
         this.quantity = quantity;
         this.price = price;
-
-
+        this.#name = name;
     }
 
     /**
@@ -51,7 +54,7 @@ module.exports = class CartItem {
      */
     get quantity() {
         if (this.#quantity < 1) {
-            throw new Error("InvalidQuantityException");
+            throw new InvalidQuantityException();
         }
         return this.#quantity;
 
@@ -59,7 +62,7 @@ module.exports = class CartItem {
 
     set quantity(value) {
         if (value < 1) {
-            throw new Error("InvalidQuantityException");
+            throw new InvalidQuantityException();
         }
 
         this.#quantity = value;
@@ -74,7 +77,7 @@ module.exports = class CartItem {
 
     set price(value) {
         if (value < 10) {
-            throw new Error("InvalidPriceException");
+            throw new InvalidPriceException();
         }
 
         this.#price = value;
